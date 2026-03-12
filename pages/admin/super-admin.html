@@ -46,7 +46,7 @@
                     <p>Manage officers, departments, and complaints</p>
                 </div>
                 <div class="admin-actions">
-                    <button class="btn-primary" id="addOfficerBtn">
+                    <button class="btn-outline" id="addOfficerBtn">
                         <i class="fas fa-user-plus"></i> Add Officer
                     </button>
                     <button class="btn-outline" id="exportDataBtn">
@@ -118,12 +118,12 @@
 
             <!-- Department Stats -->
             <div class="card" style="margin-top: 30px;">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <h3><i class="fas fa-building"></i> Department Performance</h3>
                     <button class="btn-outline btn-small" onclick="refreshDeptStats()">
                         <i class="fas fa-sync-alt"></i> Refresh
                     </button>
-                </div>
+                </div> -->
                 <div class="table-responsive">
                     <table class="data-table">
                         <thead>
@@ -169,7 +169,7 @@
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
-                    <button class="btn-primary" onclick="filterOfficers()">
+                    <button class="btn-outline" onclick="filterOfficers()">
                         <i class="fas fa-filter"></i> Apply
                     </button>
                 </div>

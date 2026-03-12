@@ -88,7 +88,7 @@ function loadOfficersList() {
                 </span>
             </td>
             <td>
-                <button class="btn-small btn-primary" onclick="editOfficer('${officer.id}')">
+                <button class="btn-small btn-outline" onclick="editOfficer('${officer.id}')">
                     <i class="fas fa-edit"></i>
                 </button>
                 <button class="btn-small btn-danger" onclick="deleteOfficer('${officer.id}')">

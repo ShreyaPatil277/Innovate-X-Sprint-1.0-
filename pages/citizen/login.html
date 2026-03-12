@@ -3,66 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citizen Login - JanSeva CRM</title>
-    <!-- Supabase Configuration (CREATE THIS FILE) -->
-    <script src="assets/js/config.js"></script>
-    
-    <!-- Supabase Client Helper -->
-    <script src="assets/js/supabase-client.js"></script>
+    <title>Citizen Login - NagarVaani</title>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/components.css">
-    <link rel="stylesheet" href="../../assets/css/citizen.css">
+    <link rel="stylesheet" href="../../assets/css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
+    <!-- Government Header Strip -->
+    <div class="gov-header-strip"></div>
+
+    <!-- Government Seal -->
+    <div class="gov-seal">
+        <i class="fas fa-ashoka-chakra"></i>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="login-container citizen">
         <div class="login-card">
             <div class="login-header">
                 <div class="logo">
-                    <i class="fas fa-comment-dots"></i>
-                    <span>JanSeva CRM</span>
+                    <i class="fas fa-user"></i>
+                    <span>NagarVaani</span>
                 </div>
                 <h2>Citizen Login</h2>
-                <p>Login to track and manage your complaints</p>
+                <p>Access your complaints and track progress</p>
+                <div class="role-badge">
+                    <i class="fas fa-id-card"></i> Citizen Portal
+                </div>
             </div>
 
-            <form class="login-form" data-role="citizen">
+            <!-- Alert Message -->
+            <div class="alert" id="alertMessage">
+                <i class="fas fa-info-circle"></i>
+                <span id="alertText"></span>
+            </div>
+
+            <!-- Login Form -->
+            <form class="login-form" id="citizenLoginForm" data-role="citizen">
+                <!-- Email/Phone Toggle -->
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email">
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button type="button" class="btn-outline btn-small" id="emailTab" style="flex: 1;">📧 Email</button>
+                        <button type="button" class="btn-outline btn-small" id="phoneTab" style="flex: 1;">📱 Phone</button>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
+                <!-- Email Login (Default) -->
+                <div id="emailLogin">
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" class="form-control" id="email" 
+                                placeholder="Enter your email" value="citizen@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-key input-icon"></i>
+                            <input type="password" class="form-control" id="password" 
+                                placeholder="Enter your password" value="password123">
+                            <button type="button" class="password-toggle" id="togglePassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phone Login (Hidden by default) -->
+                <div id="phoneLogin" style="display: none;">
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i> Mobile Number
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" class="form-control" id="phone" 
+                                placeholder="Enter 10-digit mobile number" maxlength="10" pattern="[0-9]{10}">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-outline" id="sendOtpBtn" style="width: 100%; margin-bottom: 10px;">
+                        <i class="fas fa-paper-plane"></i> Send OTP
+                    </button>
+
+                    <div class="otp-section" id="otpSection">
+                        <div class="form-group">
+                            <label for="otp">
+                                <i class="fas fa-key"></i> Enter OTP
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="text" class="form-control" id="otp" 
+                                    placeholder="6-digit OTP" maxlength="6" pattern="[0-9]{6}">
+                            </div>
+                        </div>
+                        <button type="button" class="btn-primary" id="verifyOtpBtn" style="width: 100%;">
+                            <i class="fas fa-check-circle"></i> Verify & Login
+                        </button>
+                    </div>
                 </div>
 
                 <div class="login-options">
                     <label class="remember-me">
-                        <input type="checkbox"> Remember me
+                        <input type="checkbox" id="rememberMe" checked> 
+                        <span>Remember me</span>
                     </label>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <a href="#" class="forgot-password" id="forgotPassword">
+                        <i class="fas fa-question-circle"></i> Forgot Password?
+                    </a>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%;">
-                    <i class="fas fa-sign-in-alt"></i> Login
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login to Dashboard</span>
                 </button>
             </form>
 
-          
-            <div class="login-footer">
-                <p>New to JanSeva? <a href="#">Register here</a></p>
+        
+
+            <!-- Security Info -->
+            <div class="security-info">
+                <div class="security-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Your data is secure with government-grade encryption</span>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>OTP login available for quick access</span>
+                </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="../../index.html" style="color: var(--gray);">
+            <!-- Register Link -->
+            <div class="login-footer">
+                <p style="margin-bottom: 10px;">New to NagarVaani? 
+                    <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 600;">Register here</a>
+                </p>
+                <a href="../../index.html" class="back-link">
                     <i class="fas fa-arrow-left"></i> Back to Home
                 </a>
             </div>
+        </div>
+
+        <!-- Developer Credit -->
+        <div class="dev-credit">
+            <i class="fas fa-heart"></i> Developed by Team NagarVaani for Digital India
         </div>
     </div>
 
     <script src="../../assets/js/main.js"></script>
     <script src="../../assets/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const emailTab = document.getElementById('emailTab');
+            const phoneTab = document.getElementById('phoneTab');
+            const emailLogin = document.getElementById('emailLogin');
+            const phoneLogin = document.getElementById('phoneLogin');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const sendOtpBtn = document.getElementById('sendOtpBtn');
+            const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+            const otpSection = document.getElementById('otpSection');
+            const loginForm = document.getElementById('citizenLoginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+            const forgotPassword = document.getElementById('forgotPassword');
+
+            // Tab switching
+            emailTab.addEventListener('click', function() {
+                emailTab.classList.add('btn-primary');
+                emailTab.classList.remove('btn-outline');
+                phoneTab.classList.add('btn-outline');
+                phoneTab.classList.remove('btn-primary');
+                emailLogin.style.display = 'block';
+                phoneLogin.style.display = 'none';
+            });
+
+            phoneTab.addEventListener('click', function() {
+                phoneTab.classList.add('btn-primary');
+                phoneTab.classList.remove('btn-outline');
+                emailTab.classList.add('btn-outline');
+                emailTab.classList.remove('btn-primary');
+                emailLogin.style.display = 'none';
+                phoneLogin.style.display = 'block';
+            });
+
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            // Restrict phone input to numbers only
+            document.getElementById('phone').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+            });
+
+            // Restrict OTP to numbers only
+            document.getElementById('otp').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
+            });
+
+            // Show alert function
+            function showAlert(message, type = 'error') {
+                alertMessage.className = `alert show alert-${type}`;
+                alertText.textContent = message;
+                
+                setTimeout(() => {
+                    alertMessage.classList.remove('show');
+                }, 5000);
+            }
+
+            // Send OTP
+            sendOtpBtn.addEventListener('click', function() {
+                const phone = document.getElementById('phone').value;
+                
+                if (!phone || phone.length !== 10) {
+                    showAlert('Please enter valid 10-digit mobile number', 'error');
+                    return;
+                }
+
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-paper-plane"></i> Resend OTP';
+                    this.disabled = false;
+                    otpSection.classList.add('show');
+                    showAlert('OTP sent to ' + phone, 'success');
+                }, 2000);
+            });
+
+            // Verify OTP
+            verifyOtpBtn.addEventListener('click', function() {
+                const otp = document.getElementById('otp').value;
+                
+                if (!otp || otp.length !== 6) {
+                    showAlert('Please enter valid 6-digit OTP', 'error');
+                    return;
+                }
+
+                if (otp === '123456') {
+                    showAlert('OTP verified! Logging in...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'my-dashboard.html';
+                    }, 1500);
+                } else {
+                    showAlert('Invalid OTP. Use 123456 for demo.', 'error');
+                }
+            });
+
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                if (!email || !password) {
+                    showAlert('Please fill in all fields', 'error');
+                    return;
+                }
+
+                // Show loading
+                loginBtn.classList.add('loading');
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+                setTimeout(() => {
+                    if (email === 'citizen@example.com' && password === 'password123') {
+                        showAlert('Login successful! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'my-dashboard.html';
+                        }, 1500);
+                    } else {
+                        showAlert('Invalid credentials. Use demo credentials.', 'error');
+                        loginBtn.classList.remove('loading');
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Login to Dashboard</span>';
+                    }
+                }, 2000);
+            });
+
+            // Forgot password
+            forgotPassword.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAlert('Password reset link sent to your email', 'info');
+            });
+
+            // Check for saved credentials
+            if (localStorage.getItem('nagarvaani_remember')) {
+                document.getElementById('email').value = 'citizen@example.com';
+                document.getElementById('rememberMe').checked = true;
+            }
+
+            // Add input animations
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,80 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Officer Login - JanSeva CRM</title>
-    <!-- Supabase Configuration (CREATE THIS FILE) -->
-    <script src="assets/js/config.js"></script>
-    
-    <!-- Supabase Client Helper -->
-    <script src="assets/js/supabase-client.js"></script>
+    <title>Officer Login - NagarVaani</title>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/components.css">
-    <link rel="stylesheet" href="../../assets/css/officer.css">
+    <link rel="stylesheet" href="../../assets/css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Officer-specific additional styles */
+        .login-container.officer {
+            background: linear-gradient(135deg, #0b1f3a, #1a365d);
+        }
+
+        .login-container.officer .login-card {
+            border-top: 4px solid #2563eb;
+        }
+
+        .badge-department {
+            background: #1e3c72;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .quick-stat {
+            text-align: center;
+        }
+
+        .quick-stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .quick-stat-label {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        .department-selector {
+            position: relative;
+        }
+
+        .department-selector i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2563eb;
+            z-index: 1;
+        }
+
+        .department-selector select {
+            padding-left: 42px;
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
+    <!-- Government Header Strip -->
+    <div class="gov-header-strip"></div>
+
+    <!-- Government Seal -->
+    <div class="gov-seal">
+        <i class="fas fa-ashoka-chakra"></i>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="login-container officer">
         <div class="login-card">
             <div class="login-header">
                 <div class="logo">
                     <i class="fas fa-user-tie"></i>
-                    <span>JanSeva CRM</span>
+                    <span>NagarVaani</span>
                 </div>
                 <h2>Officer Login</h2>
                 <p>Government employee portal</p>
+                <div class="role-badge">
+                    <i class="fas fa-shield-alt"></i> Authorized Personnel Only
+                </div>
             </div>
 
-            <form class="login-form" data-role="officer">
+            <!-- Alert Message -->
+            <div class="alert" id="alertMessage">
+                <i class="fas fa-info-circle"></i>
+                <span id="alertText"></span>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="quick-stat">
+                    <div class="quick-stat-value">24</div>
+                    <div class="quick-stat-label">Total Assigned</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">12</div>
+                    <div class="quick-stat-label">In Progress</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">8</div>
+                    <div class="quick-stat-label">Resolved</div>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form class="login-form" id="officerLoginForm" data-role="officer">
                 <div class="form-group">
-                    <label for="employeeId">Employee ID</label>
-                    <input type="text" id="employeeId" placeholder="Enter employee ID">
+                    <label for="employeeId">
+                        <i class="fas fa-id-card"></i> Employee ID
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card input-icon"></i>
+                        <input type="text" class="form-control" id="employeeId" 
+                            placeholder="Enter employee ID" value="OFF001">
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-key input-icon"></i>
+                        <input type="password" class="form-control" id="password" 
+                            placeholder="Enter your password" value="password123">
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="department">Department</label>
-                    <select id="department" class="form-control">
-                        <option value="">Select Department</option>
-                        <option value="pwd">Public Works Department (PWD)</option>
-                        <option value="water">Water Supply Department</option>
-                        <option value="electricity">Electricity Board</option>
-                        <option value="municipal">Municipal Corporation</option>
-                        <option value="police">Police Department</option>
-                    </select>
+                <div class="form-group department-selector">
+                    <label for="department">
+                        <i class="fas fa-building"></i> Department
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-building input-icon"></i>
+                        <select class="form-select" id="department">
+                            <option value="pwd">Public Works Department (PWD)</option>
+                            <option value="water">Water Supply Department</option>
+                            <option value="electricity">Electricity Board</option>
+                            <option value="municipal">Municipal Corporation</option>
+                            <option value="police">Police Department</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="login-options">
                     <label class="remember-me">
-                        <input type="checkbox"> Remember me
+                        <input type="checkbox" id="rememberMe" checked> 
+                        <span>Remember me</span>
                     </label>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <a href="#" class="forgot-password" id="forgotPassword">
+                        <i class="fas fa-question-circle"></i> Need help?
+                    </a>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%;">
-                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Access Officer Dashboard</span>
                 </button>
             </form>
 
-            <div class="login-footer">
-                <p>Official use only. Authorized personnel only.</p>
-                <div class="badge badge-info" style="margin-top: 10px;">
-                    <i class="fas fa-shield-alt"></i> Secured by Government SSL
+            <!-- Security Info -->
+            <div class="security-info">
+                <div class="security-item">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>Biometric authentication available</span>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-history"></i>
+                    <span>Last login: Today 09:30 AM</span>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>IP: 192.168.1.100 (recorded)</span>
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="../../index.html" style="color: var(--gray);">
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <i class="fas fa-flask"></i> <strong>Demo Credentials:</strong><br>
+                Employee ID: OFF001 | Password: password123<br>
+                Department: PWD
+            </div>
+
+            <div class="login-footer">
+                <a href="../../index.html" class="back-link">
                     <i class="fas fa-arrow-left"></i> Back to Home
                 </a>
             </div>
+        </div>
+
+        <!-- Developer Credit -->
+        <div class="dev-credit">
+            <i class="fas fa-heart"></i> Developed by Team NagarVaani for Digital India
         </div>
     </div>
 
     <script src="../../assets/js/main.js"></script>
     <script src="../../assets/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const loginForm = document.getElementById('officerLoginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+            const forgotPassword = document.getElementById('forgotPassword');
+
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            // Show alert function
+            function showAlert(message, type = 'error') {
+                alertMessage.className = `alert show alert-${type}`;
+                alertText.textContent = message;
+                
+                setTimeout(() => {
+                    alertMessage.classList.remove('show');
+                }, 5000);
+            }
+
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const employeeId = document.getElementById('employeeId').value;
+                const password = document.getElementById('password').value;
+                const department = document.getElementById('department').value;
+
+                if (!employeeId || !password) {
+                    showAlert('Please fill in all fields', 'error');
+                    return;
+                }
+
+                // Show loading
+                loginBtn.classList.add('loading');
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying credentials...';
+
+                setTimeout(() => {
+                    if (employeeId === 'OFF001' && password === 'password123') {
+                        showAlert('Login successful! Redirecting...', 'success');
+                        
+                        // Store officer session
+                        const officerData = {
+                            id: employeeId,
+                            department: department,
+                            loginTime: new Date().toISOString()
+                        };
+                        localStorage.setItem('nagarvaani_officer', JSON.stringify(officerData));
+
+                        setTimeout(() => {
+                            window.location.href = '../officer/dashboard.html';
+                        }, 1500);
+                    } else {
+                        showAlert('Invalid credentials. Use OFF001/password123', 'error');
+                        loginBtn.classList.remove('loading');
+                        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Access Officer Dashboard</span>';
+                    }
+                }, 2000);
+            });
+
+            // Forgot password
+            forgotPassword.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAlert('Contact your department head for password reset', 'info');
+            });
+
+            // Check for existing session
+            const existingSession = localStorage.getItem('nagarvaani_officer');
+            if (existingSession) {
+                const session = JSON.parse(existingSession);
+                const loginTime = new Date(session.loginTime);
+                const now = new Date();
+                const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+                
+                if (hoursDiff < 8) { // Session valid for 8 hours
+                    if (confirm('You have an existing session. Continue?')) {
+                        window.location.href = '../officer/dashboard.html';
+                    }
+                }
+            }
+
+            // Add keyboard shortcut (Ctrl+Alt+O for officer quick access)
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.altKey && e.key === 'o') {
+                    document.getElementById('employeeId').value = 'OFF001';
+                    document.getElementById('password').value = 'password123';
+                    showAlert('Demo credentials filled!', 'success');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

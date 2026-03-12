@@ -4,428 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - NagarVaani</title>
-    <!-- Supabase Configuration (CREATE THIS FILE) -->
-    <script src="assets/js/config.js"></script>
-    
-    <!-- Supabase Client Helper -->
-    <script src="assets/js/supabase-client.js"></script>
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Admin Login Specific Styles - Light Mode */
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #1e1e2f 0%, #2d2d44 100%);
-            position: relative;
-            overflow: hidden;
+        /* Admin-specific additional styles */
+        .login-container.admin {
+            background: linear-gradient(135deg, #0a0a14, #1a1a2e);
         }
 
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #FF9933, #ffffff, #138808);
-        }
-
-        .login-container::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            right: -50px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .login-card {
-            background: white;
-            border-radius: 24px;
-            padding: 40px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 1px solid #e2e8f0;
-            position: relative;
-            z-index: 1;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .logo i {
-            font-size: 2.5rem;
-            color: #2563eb;
-            background: #dbeafe;
-            padding: 15px;
-            border-radius: 50%;
-        }
-
-        .logo span {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .login-header h2 {
-            color: #0f172a;
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .login-header p {
-            color: #64748b;
-            font-size: 0.95rem;
+        .login-container.admin .login-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
         }
 
         .admin-badge {
-            background: linear-gradient(135deg, #2563eb, #1e40af);
-            color: white;
-            padding: 6px 16px;
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            color: #0f172a;
+            padding: 8px 16px;
             border-radius: 30px;
-            font-size: 0.85rem;
             font-weight: 600;
+            font-size: 0.85rem;
             display: inline-block;
-            margin-top: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .login-form {
-            margin-bottom: 24px;
-        }
-
-        .form-group {
             margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(251, 191, 36, 0.3);
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #334155;
-            font-size: 0.95rem;
-        }
-
-        .form-group label i {
-            color: #2563eb;
-            margin-right: 8px;
-            width: 18px;
-        }
-
-        .input-wrapper {
+        .security-key-group {
             position: relative;
+            margin-top: 20px;
         }
 
-        .input-wrapper i {
+        .security-key-group::before {
+            content: '🔐';
             position: absolute;
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            z-index: 1;
         }
 
-        .form-control {
-            width: 100%;
-            padding: 14px 14px 14px 42px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            background: white;
-            color: #0f172a;
+        .security-key-group input {
+            padding-left: 42px;
+            font-family: monospace;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            text-align: center;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px #dbeafe;
-        }
-
-        .form-control::placeholder {
-            color: #94a3b8;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 5px;
-        }
-
-        .password-toggle:hover {
-            color: #2563eb;
-        }
-
-        .login-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .remember-me {
+        .two-factor-info {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: #475569;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .remember-me input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: #2563eb;
-            cursor: pointer;
-        }
-
-        .forgot-password {
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #2563eb, #1e40af);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-login:active {
-            transform: translateY(0);
-        }
-
-        .security-info {
-            margin-top: 24px;
-            padding: 16px;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .security-info-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #475569;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            margin: 15px 0;
             font-size: 0.85rem;
-            margin-bottom: 10px;
+            color: #475569;
         }
 
-        .security-info-item:last-child {
-            margin-bottom: 0;
+        .two-factor-info i {
+            color: #2563eb;
+            font-size: 1.2rem;
         }
 
-        .security-info-item i {
-            color: #059669;
-            width: 16px;
+        .system-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .admin-footer {
-            margin-top: 24px;
+        .system-stat {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
             text-align: center;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 24px;
         }
 
-        .back-link {
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover {
+        .system-stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
             color: #2563eb;
         }
 
-        .back-link i {
-            font-size: 0.8rem;
+        .system-stat-label {
+            font-size: 0.7rem;
+            color: #64748b;
         }
 
-        .gov-seal-small {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        .last-login {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 1.5rem;
-        }
-
-        /* Alert messages */
-        .alert {
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-
-        .alert.show {
-            display: flex;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        .alert i {
-            font-size: 1rem;
-        }
-
-        /* Loading state */
-        .btn-login.loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .btn-login.loading i {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
-            }
-
-            .logo i {
-                font-size: 2rem;
-                padding: 12px;
-            }
-
-            .logo span {
-                font-size: 1.5rem;
-            }
-
-            .login-header h2 {
-                font-size: 1.5rem;
-            }
-
-            .gov-seal-small {
-                display: none;
-            }
-        }
-
-        /* Developer credit */
-        .dev-credit {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.5);
+            gap: 8px;
+            padding: 8px;
+            background: #1e293b;
+            color: white;
+            border-radius: 8px;
             font-size: 0.8rem;
-            text-align: center;
-            white-space: nowrap;
+            margin-top: 15px;
         }
 
-        .dev-credit i {
-            color: #ff6b6b;
-            animation: heartbeat 1.5s ease infinite;
+        .last-login i {
+            color: #fbbf24;
         }
 
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .ip-address {
+            font-family: monospace;
+            background: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
     <!-- Government Header Strip -->
-    <div style="position: fixed; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #FF9933, #ffffff, #138808); z-index: 1000;"></div>
+    <div class="gov-header-strip"></div>
 
-    <!-- Small Government Seal -->
-    <div class="gov-seal-small">
+    <!-- Government Seal -->
+    <div class="gov-seal">
         <i class="fas fa-ashoka-chakra"></i>
     </div>
 
-    <div class="login-container">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="login-container admin">
         <div class="login-card">
             <div class="login-header">
                 <div class="logo">
@@ -433,9 +145,9 @@
                     <span>NagarVaani</span>
                 </div>
                 <h2>Admin Portal</h2>
-                <p>Super Admin Dashboard Access</p>
+                <p>Super Administrator Access</p>
                 <div class="admin-badge">
-                    <i class="fas fa-shield-alt"></i> Authorized Personnel Only
+                    <i class="fas fa-shield-alt"></i> TOP SECURITY CLEARANCE
                 </div>
             </div>
 
@@ -445,15 +157,36 @@
                 <span id="alertText"></span>
             </div>
 
+            <!-- System Stats -->
+            <div class="system-stats">
+                <div class="system-stat">
+                    <div class="system-stat-value">12,847</div>
+                    <div class="system-stat-label">Total Complaints</div>
+                </div>
+                <div class="system-stat">
+                    <div class="system-stat-value">156</div>
+                    <div class="system-stat-label">Active Officers</div>
+                </div>
+                <div class="system-stat">
+                    <div class="system-stat-value">94%</div>
+                    <div class="system-stat-label">SLA Compliance</div>
+                </div>
+                <div class="system-stat">
+                    <div class="system-stat-value">4.6</div>
+                    <div class="system-stat-label">Citizen Rating</div>
+                </div>
+            </div>
+
+            <!-- Login Form -->
             <form class="login-form" id="adminLoginForm" data-role="admin">
                 <div class="form-group">
                     <label for="username">
-                        <i class="fas fa-user-shield"></i> Username
+                        <i class="fas fa-user-shield"></i> Admin Username
                     </label>
                     <div class="input-wrapper">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-user input-icon"></i>
                         <input type="text" class="form-control" id="username" 
-                            placeholder="Enter admin username" required autocomplete="off">
+                            placeholder="Enter admin username" value="admin">
                     </div>
                 </div>
 
@@ -462,36 +195,49 @@
                         <i class="fas fa-lock"></i> Password
                     </label>
                     <div class="input-wrapper">
-                        <i class="fas fa-key"></i>
+                        <i class="fas fa-key input-icon"></i>
                         <input type="password" class="form-control" id="password" 
-                            placeholder="Enter admin password" required>
+                            placeholder="Enter admin password" value="admin123">
                         <button type="button" class="password-toggle" id="togglePassword">
                             <i class="far fa-eye"></i>
                         </button>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- Two Factor Authentication -->
+                <div class="two-factor-info">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Two-factor authentication required</span>
+                </div>
+
+                <div class="form-group security-key-group">
                     <label for="adminKey">
-                        <i class="fas fa-fingerprint"></i> Admin Security Key
+                        <i class="fas fa-key"></i> 6-digit Security Key
                     </label>
                     <div class="input-wrapper">
-                        <i class="fas fa-qrcode"></i>
-                        <input type="password" class="form-control" id="adminKey" 
-                            placeholder="Enter 6-digit security key" maxlength="6" pattern="[0-9]{6}">
+                        <input type="text" class="form-control" id="adminKey" 
+                            placeholder="• • • • • •" maxlength="6" pattern="[0-9]{6}" 
+                            value="123456" style="text-align: center; font-size: 1.5rem;">
                     </div>
-                    <small style="color: #64748b; font-size: 0.8rem; margin-top: 4px; display: block;">
-                        <i class="fas fa-info-circle"></i> 6-digit key sent to registered mobile
+                    <small style="color: #64748b; margin-top: 4px; display: block;">
+                        <i class="fas fa-clock"></i> Key expires in 5:00 min
                     </small>
+                </div>
+
+                <!-- Last Login Info -->
+                <div class="last-login">
+                    <i class="fas fa-history"></i>
+                    <span>Last login: Today 08:45 AM</span>
+                    <span class="ip-address">IP: 10.0.0.1</span>
                 </div>
 
                 <div class="login-options">
                     <label class="remember-me">
-                        <input type="checkbox" id="rememberMe"> 
+                        <input type="checkbox" id="rememberMe" checked> 
                         <span>Remember this device</span>
                     </label>
                     <a href="#" class="forgot-password" id="forgotPassword">
-                        <i class="fas fa-question-circle"></i> Need help?
+                        <i class="fas fa-question-circle"></i> Emergency Access
                     </a>
                 </div>
 
@@ -503,26 +249,34 @@
 
             <!-- Security Info -->
             <div class="security-info">
-                <div class="security-info-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Two-factor authentication enabled</span>
+                <div class="security-item">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>Biometric authentication available</span>
                 </div>
-                <div class="security-info-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>IP address will be logged</span>
+                <div class="security-item">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>End-to-end encrypted connection</span>
                 </div>
-                <div class="security-info-item">
-                    <i class="fas fa-check-circle"></i>
+                <div class="security-item">
+                    <i class="fas fa-clock"></i>
                     <span>Session expires in 2 hours</span>
                 </div>
+                <div class="security-item">
+                    <i class="fas fa-globe"></i>
+                    <span>IP: 192.168.1.100 (logged)</span>
+                </div>
             </div>
 
-            <!-- Demo Credentials Hint -->
-            <div style="background: #dbeafe; padding: 10px; border-radius: 8px; margin-top: 16px; font-size: 0.85rem; color: #1e40af; border: 1px solid #bfdbfe;">
-                <i class="fas fa-flask"></i> <strong>Demo Credentials:</strong> Username: admin | Password: admin123 | Key: 123456
-            </div>
+            <!-- Demo Credentials -->
+            <!-- <div class="demo-credentials">
+                <i class="fas fa-flask"></i> <strong>Demo Credentials:</strong><br>
+                Username: admin | Password: admin123 | Security Key: 123456
+                <div style="margin-top: 5px; font-size: 0.8rem;">
+                    <i class="fas fa-keyboard"></i> Press Ctrl+Alt+A to autofill
+                </div>
+            </div> -->
 
-            <div class="admin-footer">
+            <div class="login-footer">
                 <a href="../../index.html" class="back-link">
                     <i class="fas fa-arrow-left"></i> Back to Home
                 </a>
@@ -531,20 +285,19 @@
 
         <!-- Developer Credit -->
         <div class="dev-credit">
-            <i class="fas fa-heart"></i> Developed by <strong>Team NagarVaani</strong> for Digital India
+            <i class="fas fa-heart"></i> Developed by Team NagarVaani for Digital India
         </div>
     </div>
 
     <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // DOM Elements
-            const loginForm = document.getElementById('adminLoginForm');
-            const username = document.getElementById('username');
-            const password = document.getElementById('password');
-            const adminKey = document.getElementById('adminKey');
             const togglePassword = document.getElementById('togglePassword');
-            const rememberMe = document.getElementById('rememberMe');
+            const passwordInput = document.getElementById('password');
+            const adminKey = document.getElementById('adminKey');
+            const loginForm = document.getElementById('adminLoginForm');
             const loginBtn = document.getElementById('loginBtn');
             const alertMessage = document.getElementById('alertMessage');
             const alertText = document.getElementById('alertText');
@@ -552,8 +305,8 @@
 
             // Toggle password visibility
             togglePassword.addEventListener('click', function() {
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
                 this.querySelector('i').classList.toggle('fa-eye');
                 this.querySelector('i').classList.toggle('fa-eye-slash');
             });
@@ -573,106 +326,75 @@
                 }, 5000);
             }
 
-            // Forgot password handler
-            forgotPassword.addEventListener('click', function(e) {
-                e.preventDefault();
-                showAlert('Contact your system administrator for assistance', 'info');
-            });
-
-            // Check for saved credentials
-            if (localStorage.getItem('nagarvaani_admin_remember')) {
-                const saved = JSON.parse(localStorage.getItem('nagarvaani_admin_remember'));
-                username.value = saved.username || '';
-                rememberMe.checked = true;
-            }
+            // Countdown timer for security key
+            let timeLeft = 300; // 5 minutes in seconds
+            const timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.querySelector('.security-key-group small').innerHTML = 
+                    `<i class="fas fa-clock"></i> Key expires in ${minutes}:${seconds.toString().padStart(2, '0')} min`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.querySelector('.security-key-group small').innerHTML = 
+                        '<i class="fas fa-exclamation-triangle" style="color: #dc2626;"></i> Key expired - Request new';
+                }
+                timeLeft--;
+            }, 1000);
 
             // Form submission
-            loginForm.addEventListener('submit', async function(e) {
+            loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                // Validate inputs
-                if (!username.value.trim()) {
-                    showAlert('Please enter username', 'error');
-                    username.focus();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const key = document.getElementById('adminKey').value;
+
+                if (!username || !password) {
+                    showAlert('Please fill in all fields', 'error');
                     return;
                 }
 
-                if (!password.value) {
-                    showAlert('Please enter password', 'error');
-                    password.focus();
-                    return;
-                }
-
-                if (!adminKey.value || adminKey.value.length !== 6) {
+                if (!key || key.length !== 6) {
                     showAlert('Please enter valid 6-digit security key', 'error');
-                    adminKey.focus();
                     return;
                 }
 
-                // Show loading state
+                // Show loading
                 loginBtn.classList.add('loading');
-                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
-                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying credentials...';
 
-                // Simulate API call
                 setTimeout(() => {
-                    // Demo validation
-                    if (username.value === 'admin' && password.value === 'admin123' && adminKey.value === '123456') {
-                        // Success
-                        showAlert('Login successful! Redirecting...', 'success');
+                    if (username === 'admin' && password === 'admin123' && key === '123456') {
+                        showAlert('2FA verified! Access granted...', 'success');
                         
-                        // Save remember me
-                        if (rememberMe.checked) {
-                            localStorage.setItem('nagarvaani_admin_remember', JSON.stringify({
-                                username: username.value
-                            }));
-                        } else {
-                            localStorage.removeItem('nagarvaani_admin_remember');
-                        }
-
-                        // Create admin session
-                        const adminUser = {
-                            id: 'ADMIN001',
-                            username: username.value,
-                            role: 'admin',
-                            name: 'Super Admin',
-                            token: 'nagarvaani-admin-' + Date.now(),
-                            loginTime: new Date().toISOString()
+                        // Store admin session
+                        const adminData = {
+                            username: username,
+                            loginTime: new Date().toISOString(),
+                            sessionId: 'ADMIN-' + Date.now()
                         };
+                        localStorage.setItem('nagarvaani_admin', JSON.stringify(adminData));
 
-                        // Store in localStorage
-                        localStorage.setItem('nagarvaani_admin_session', JSON.stringify(adminUser));
-
-                        // Redirect to admin dashboard
                         setTimeout(() => {
                             window.location.href = 'super-admin.html';
                         }, 1500);
                     } else {
-                        // Error
-                        showAlert('Invalid credentials. Use admin/admin123 with key 123456', 'error');
-                        
-                        // Reset button
+                        showAlert('Invalid credentials. Use demo credentials.', 'error');
                         loginBtn.classList.remove('loading');
                         loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Access Admin Dashboard</span>';
-                        loginBtn.disabled = false;
                     }
                 }, 2000);
             });
 
-            // Add input focus effects
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.style.boxShadow = '0 0 0 4px #dbeafe';
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.parentElement.style.boxShadow = 'none';
-                });
+            // Emergency access / Forgot password
+            forgotPassword.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAlert('Emergency access requested. Contact system administrator.', 'warning');
             });
 
             // Check for existing session
-            const existingSession = localStorage.getItem('nagarvaani_admin_session');
+            const existingSession = localStorage.getItem('nagarvaani_admin');
             if (existingSession) {
                 const session = JSON.parse(existingSession);
                 const loginTime = new Date(session.loginTime);
@@ -680,38 +402,52 @@
                 const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
                 
                 if (hoursDiff < 2) { // Session valid for 2 hours
-                    if (confirm('You have an existing session. Continue?')) {
+                    if (confirm('You have an existing admin session. Continue?')) {
                         window.location.href = 'super-admin.html';
-                    } else {
-                        localStorage.removeItem('nagarvaani_admin_session');
                     }
-                } else {
-                    localStorage.removeItem('nagarvaani_admin_session');
                 }
             }
 
-            // Add keyboard shortcut (Ctrl+Alt+A for admin quick access)
+            // Keyboard shortcut (Ctrl+Alt+A for admin autofill)
             document.addEventListener('keydown', function(e) {
                 if (e.ctrlKey && e.altKey && e.key === 'a') {
-                    username.value = 'admin';
-                    password.value = 'admin123';
-                    adminKey.value = '123456';
-                    showAlert('Demo credentials filled!', 'success');
+                    document.getElementById('username').value = 'admin';
+                    document.getElementById('password').value = 'admin123';
+                    document.getElementById('adminKey').value = '123456';
+                    showAlert('Demo credentials autofilled!', 'success');
                 }
             });
 
-            // Add animation to security info on hover
-            const securityItems = document.querySelectorAll('.security-info-item');
-            securityItems.forEach((item, index) => {
-                item.style.animation = `slideUp 0.3s ease ${index * 0.1}s both`;
+            // Add input animations
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                    this.parentElement.style.transition = 'transform 0.2s ease';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
             });
-        });
 
-        // Prevent back button after logout
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
+            // Simulate typing animation for demo
+            const inputs = [
+                { element: document.getElementById('username'), value: 'admin', delay: 500 },
+                { element: document.getElementById('password'), value: 'admin123', delay: 1000 },
+                { element: document.getElementById('adminKey'), value: '123456', delay: 1500 }
+            ];
+
+            inputs.forEach(item => {
+                setTimeout(() => {
+                    if (!item.element.value) {
+                        item.element.value = item.value;
+                        item.element.style.borderColor = '#059669';
+                        setTimeout(() => {
+                            item.element.style.borderColor = '#e2e8f0';
+                        }, 1000);
+                    }
+                }, item.delay);
+            });
         });
     </script>
 </body>
