@@ -384,12 +384,12 @@
         </nav>
 
         <div class="lang-selector">
-            <button class="lang-btn">🇮🇳 हिन्दी</button>
-            <button class="lang-btn">🇬🇧 English</button>
-            <button class="lang-btn">🇮🇳 मराठी</button>
-            <button class="lang-btn">🇮🇳 தமிழ்</button>
-            <button class="lang-btn">🇮🇳 తెలుగు</button>
-            <button class="lang-btn">🇮🇳 বাংলা</button>
+            <button class="lang-btn" data-lang="hi">🇮🇳 हिन्दी</button>
+            <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+            <button class="lang-btn" data-lang="mr">🇮🇳 मराठी</button>
+            <button class="lang-btn" data-lang="ta">🇮🇳 தமிழ்</button>
+            <button class="lang-btn" data-lang="te">🇮🇳 తెలుగు</button>
+            <button class="lang-btn" data-lang="bn">🇮🇳 বাংলা</button>
         </div>
         
         <main>
@@ -591,13 +591,13 @@
         });
 
         // Language selector
-        document.querySelectorAll('.lang-btn').forEach(btn => {
+        /*document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.lang-btn').forEach(b => b.style.background = 'white');
                 this.style.background = '#dbeafe';
                 this.style.borderColor = '#2563eb';
             });
-        });
+        });*/
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
