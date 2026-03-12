@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment System - JanSeva CRM</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/officer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="offline-indicator">
+        <i class="fas fa-wifi-slash"></i> You are offline
+    </div>
+
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-comment-dots"></i>
+                <span>JanSeva CRM - Officer Portal</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="assignment.html" class="active">Assignment</a>
+                <span class="badge badge-info">Department Head</span>
+                <button class="btn-outline" onclick="auth.logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <main>
+            <div class="section-header">
+                <h1><i class="fas fa-diagram-project"></i> Complaint Assignment System</h1>
+                <div>
+                    <button class="btn-outline" onclick="showBulkAssignment()">
+                        <i class="fas fa-layer-group"></i> Bulk Assign
+                    </button>
+                </div>
+            </div>
+
+            <!-- Assignment Container -->
+            <div class="assignment-container">
+                <!-- Left side - Unassigned Complaints -->
+                <div class="assignment-list">
+                    <h3><i class="fas fa-clipboard-list"></i> Unassigned Complaints</h3>
+                    <p class="text-muted">Select a complaint to assign</p>
+                    <div id="unassignedList">
+                        <!-- Loaded via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Right side - Officers List -->
+                <div class="assignment-list">
+                    <h3><i class="fas fa-users"></i> Available Officers</h3>
+                    <p class="text-muted">Select an officer to assign to</p>
+                    
+                    <!-- Department Filter -->
+                    <div class="filter-group" style="margin-bottom: 15px;">
+                        <select class="filter-select" id="deptFilter">
+                            <option value="all">All Departments</option>
+                            <option value="pwd">PWD</option>
+                            <option value="water">Water Supply</option>
+                            <option value="electricity">Electricity</option>
+                            <option value="municipal">Municipal Corp</option>
+                        </select>
+                    </div>
+                    
+                    <div id="officersList">
+                        <!-- Loaded via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignment Actions -->
+            <div class="card" style="margin-top: 30px;">
+                <div class="flex-between">
+                    <div>
+                        <h4>Assignment Actions</h4>
+                        <p class="text-muted">Select a complaint and officer to assign</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-primary" id="assignBtn" disabled>
+                            <i class="fas fa-check-circle"></i> Assign Selected
+                        </button>
+                        <button class="btn-danger" id="escalateBtn">
+                            <i class="fas fa-exclamation-triangle"></i> Escalate Overdue
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Escalation Section -->
+            <div class="escalation-section">
+                <div class="escalation-header">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h4>Escalation & SLA Alerts</h4>
+                </div>
+                <div class="escalation-list" id="escalationList">
+                    <!-- Loaded via JavaScript -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Escalation Modal -->
+        <div class="modal" id="escalationModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Escalate Complaints</h3>
+                    <button class="modal-close" onclick="closeEscalationModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="escalationModalBody">
+                    <!-- Loaded via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 50px;">
+            <div class="footer-bottom">
+                <p>&copy; 2024 JanSeva CRM. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/officer/assignment.js"></script>
+</body>
+</html>

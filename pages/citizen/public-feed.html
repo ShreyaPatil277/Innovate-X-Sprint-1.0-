@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Feed - JanSeva CRM</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/citizen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="offline-indicator">
+        <i class="fas fa-wifi-slash"></i> You are offline
+    </div>
+
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-comment-dots"></i>
+                <span>JanSeva CRM</span>
+            </div>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="submit-complaint.html">New Complaint</a>
+                <a href="track-complaint.html">Track</a>
+                <a href="my-dashboard.html">My Complaints</a>
+                <a href="login.html" class="btn-outline">Login</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <main>
+            <div class="public-feed-container">
+                <div class="feed-header">
+                    <h2><i class="fas fa-globe" style="color: var(--primary);"></i> Public Feed</h2>
+                    <p>Anonymous view of civic issues in your area</p>
+                </div>
+
+                <!-- Feed Filters -->
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <select class="filter-select" id="areaFilter">
+                            <option value="all">All Areas</option>
+                            <option value="ward1">Ward 1</option>
+                            <option value="ward2">Ward 2</option>
+                            <option value="ward3">Ward 3</option>
+                            <option value="ward4">Ward 4</option>
+                            <option value="ward5">Ward 5</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select class="filter-select" id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="roads">Roads</option>
+                            <option value="water">Water</option>
+                            <option value="electricity">Electricity</option>
+                            <option value="sanitation">Sanitation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Feed Items -->
+                <div class="feed-list" id="feedList">
+                    <!-- Feed items will be loaded here -->
+                    <div class="feed-item duplicate">
+                        <div class="duplicate-badge">
+                            <i class="fas fa-copy"></i> Similar reported
+                        </div>
+                        <div class="feed-item-header">
+                            <span class="feed-area">📍 Ward 5, Market Area</span>
+                            <span class="feed-time">2 hours ago</span>
+                        </div>
+                        <div class="feed-content">
+                            <p>Large pothole on main road near vegetable market</p>
+                            <span class="feed-category">🚧 Roads</span>
+                        </div>
+                        <div class="feed-footer">
+                            <div class="feed-stats">
+                                <span class="feed-stat">
+                                    <i class="fas fa-eye"></i> 234 views
+                                </span>
+                                <span class="feed-stat">
+                                    <i class="fas fa-comment"></i> 12 similar
+                                </span>
+                            </div>
+                            <div class="feedback-buttons">
+                                <button class="feedback-btn" onclick="likeFeed(this)">
+                                    <i class="far fa-thumbs-up"></i> 45
+                                </button>
+                                <button class="feedback-btn" onclick="dislikeFeed(this)">
+                                    <i class="far fa-thumbs-down"></i> 3
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="feed-item-header">
+                            <span class="feed-area">📍 Ward 3, Park Street</span>
+                            <span class="feed-time">5 hours ago</span>
+                        </div>
+                        <div class="feed-content">
+                            <p>Street light not working for 3 days, dark at night</p>
+                            <span class="feed-category">⚡ Electricity</span>
+                        </div>
+                        <div class="feed-footer">
+                            <div class="feed-stats">
+                                <span class="feed-stat">
+                                    <i class="fas fa-eye"></i> 156 views
+                                </span>
+                                <span class="feed-stat">
+                                    <i class="fas fa-comment"></i> 5 similar
+                                </span>
+                            </div>
+                            <div class="feedback-buttons">
+                                <button class="feedback-btn" onclick="likeFeed(this)">
+                                    <i class="far fa-thumbs-up"></i> 23
+                                </button>
+                                <button class="feedback-btn" onclick="dislikeFeed(this)">
+                                    <i class="far fa-thumbs-down"></i> 1
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feed-item duplicate">
+                        <div class="duplicate-badge">
+                            <i class="fas fa-copy"></i> 3 similar reports
+                        </div>
+                        <div class="feed-item-header">
+                            <span class="feed-area">📍 Ward 8, Water Works</span>
+                            <span class="feed-time">1 day ago</span>
+                        </div>
+                        <div class="feed-content">
+                            <p>Water leakage from main pipeline, wastage of water</p>
+                            <span class="feed-category">💧 Water</span>
+                        </div>
+                        <div class="feed-footer">
+                            <div class="feed-stats">
+                                <span class="feed-stat">
+                                    <i class="fas fa-eye"></i> 412 views
+                                </span>
+                                <span class="feed-stat">
+                                    <i class="fas fa-comment"></i> 8 similar
+                                </span>
+                            </div>
+                            <div class="feedback-buttons">
+                                <button class="feedback-btn" onclick="likeFeed(this)">
+                                    <i class="far fa-thumbs-up"></i> 67
+                                </button>
+                                <button class="feedback-btn" onclick="dislikeFeed(this)">
+                                    <i class="far fa-thumbs-down"></i> 2
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="feed-item-header">
+                            <span class="feed-area">📍 Ward 2, Gandhi Nagar</span>
+                            <span class="feed-time">2 days ago</span>
+                        </div>
+                        <div class="feed-content">
+                            <p>Garbage not collected for a week, foul smell</p>
+                            <span class="feed-category">🗑️ Sanitation</span>
+                        </div>
+                        <div class="feed-footer">
+                            <div class="feed-stats">
+                                <span class="feed-stat">
+                                    <i class="fas fa-eye"></i> 189 views
+                                </span>
+                                <span class="feed-stat">
+                                    <i class="fas fa-comment"></i> 15 similar
+                                </span>
+                            </div>
+                            <div class="feedback-buttons">
+                                <button class="feedback-btn" onclick="likeFeed(this)">
+                                    <i class="far fa-thumbs-up"></i> 34
+                                </button>
+                                <button class="feedback-btn" onclick="dislikeFeed(this)">
+                                    <i class="far fa-thumbs-down"></i> 4
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="btn-outline" onclick="loadMoreFeed()">
+                        <i class="fas fa-sync-alt"></i> Load More
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer style="margin-top: 50px;">
+            <div class="footer-bottom">
+                <p>&copy; 2024 JanSeva CRM. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        function likeFeed(btn) {
+            btn.classList.toggle('liked');
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('far');
+            icon.classList.toggle('fas');
+            
+            let count = parseInt(btn.textContent.match(/\d+/)[0]);
+            if (btn.classList.contains('liked')) {
+                count++;
+                showToast('Thanks for your feedback!', 'success');
+            } else {
+                count--;
+            }
+            btn.innerHTML = `<i class="${icon.classList.contains('far') ? 'far' : 'fas'} fa-thumbs-up"></i> ${count}`;
+        }
+
+        function dislikeFeed(btn) {
+            showToast('Feedback recorded', 'info');
+        }
+
+        function loadMoreFeed() {
+            showToast('Loading more complaints...', 'info');
+        }
+    </script>
+</body>
+</html>

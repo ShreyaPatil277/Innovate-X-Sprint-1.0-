@@ -1,0 +1,441 @@
+/* citizen.css - Citizen portal specific styles - NagarVaani Light Mode */
+
+/* Complaint submission form */
+.complaint-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.complaint-form {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.language-selector {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.lang-btn {
+    padding: 8px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    background: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    color: #334155;
+}
+
+.lang-btn:hover {
+    background: #dbeafe;
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.lang-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.voice-input-container {
+    position: relative;
+}
+
+.voice-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #2563eb;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.voice-btn:hover {
+    background: #dbeafe;
+}
+
+.voice-btn.recording {
+    color: #dc2626;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.2); }
+    100% { transform: translateY(-50%) scale(1); }
+}
+
+.location-picker {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    background: #f8fafc;
+}
+
+/* My complaints dashboard */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.complaint-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.complaint-filters select,
+.complaint-filters input {
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: white;
+}
+
+.complaint-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.complaint-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.complaint-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.complaint-card.pending { border-left-color: #d97706; }
+.complaint-card.assigned { border-left-color: #0891b2; }
+.complaint-card.in-progress { border-left-color: #2563eb; }
+.complaint-card.resolved { border-left-color: #059669; }
+
+.complaint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.complaint-id {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2563eb;
+    background: #dbeafe;
+    padding: 4px 12px;
+    border-radius: 30px;
+}
+
+.complaint-body {
+    margin-bottom: 15px;
+}
+
+.complaint-category {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.complaint-category i {
+    margin-right: 5px;
+    color: #2563eb;
+}
+
+.complaint-description {
+    color: #0f172a;
+    line-height: 1.5;
+}
+
+.complaint-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.complaint-date {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* Public feed */
+.public-feed-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.feed-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.feed-item {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.feed-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.feed-item.duplicate {
+    border: 2px solid #d97706;
+}
+
+.duplicate-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #fbbf24;
+}
+
+.feed-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.feed-area {
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.feedback-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.feedback-btn {
+    padding: 8px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #475569;
+}
+
+.feedback-btn:hover {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.feedback-btn.liked {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+/* Tracking page */
+.track-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.track-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: white;
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.track-search input {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.track-search input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px #dbeafe;
+    outline: none;
+}
+
+.complaint-details {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-label {
+    width: 120px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.detail-value {
+    flex: 1;
+    color: #0f172a;
+}
+
+.officer-details {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.officer-avatar {
+    width: 50px;
+    height: 50px;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.share-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    padding: 10px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    flex: 1;
+    justify-content: center;
+    color: #475569;
+}
+
+.share-btn:hover {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* Login page */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #dbeafe, #f8fafc);
+}
+
+.login-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header .logo {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2563eb;
+}
+
+.login-header h2 {
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.otp-section {
+    display: none;
+}
+
+.otp-section.show {
+    display: block;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}

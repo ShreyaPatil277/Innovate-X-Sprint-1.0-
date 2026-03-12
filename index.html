@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NagarVaani - Government Citizen Grievance Portal</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Landing page specific styles */
+        .landing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .gov-header-strip {
+            background: linear-gradient(90deg, #FF9933 0%, #ffffff 50%, #138808 100%);
+            height: 4px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .gov-emblem {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 12px 40px;
+            background: white;
+            border-radius: 40px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            margin-top: 20px;
+        }
+
+        .gov-emblem i {
+            font-size: 2.2rem;
+            color: #000080;
+        }
+
+        .gov-emblem-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000080;
+        }
+
+        .gov-emblem-subtext {
+            font-size: 0.85rem;
+            color: #138808;
+        }
+
+        .digital-india {
+            background: linear-gradient(135deg, #dbeafe, #dcfce7);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border-light);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, white, #f8fafc);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: #0f172a;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .hero h1:first-of-type {
+            color: #000080;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .hero p {
+            color: #334155;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats .stat {
+            background: white;
+            padding: 20px 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            min-width: 160px;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 32px 24px;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: #2563eb;
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .how-it-works {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 60px 0;
+            border: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            padding: 24px;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: #dbeafe;
+            color: #2563eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .testimonials {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 60px 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border-light);
+        }
+
+        .testimonial-card i {
+            color: #dbeafe;
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-author strong {
+            color: #059669;
+            display: block;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .service-item {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .service-item:hover {
+            border-color: #2563eb;
+            box-shadow: var(--shadow-md);
+        }
+
+        .service-item i {
+            font-size: 2rem;
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+
+        .service-item h4 {
+            color: #0f172a;
+            font-size: 1rem;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 24px 0;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            padding: 6px 16px;
+            border: 1px solid var(--border-light);
+            background: white;
+            border-radius: 30px;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: #dbeafe;
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .gov-seal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid #FF9933;
+            z-index: 100;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .gov-seal i {
+            font-size: 2rem;
+            color: #000080;
+        }
+
+        .gov-seal:hover {
+            transform: rotate(5deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h1:first-of-type {
+                font-size: 1.4rem;
+            }
+            
+            .hero-stats .stat {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gov-header-strip"></div>
+
+    <div class="gov-seal">
+        <i class="fas fa-ashoka-chakra"></i>
+    </div>
+
+    <div class="offline-indicator">
+        <i class="fas fa-wifi-slash"></i> You are offline
+    </div>
+
+    <div class="landing-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0; flex-wrap: wrap; gap: 16px;">
+            <div class="gov-emblem">
+                <i class="fas fa-ashoka-chakra"></i>
+                <div>
+                    <div class="gov-emblem-text">सत्यमेव जयते</div>
+                    <div class="gov-emblem-subtext">Government of India</div>
+                </div>
+            </div>
+            <div class="digital-india">
+                <i class="fas fa-wifi"></i> Digital India Initiative
+            </div>
+        </div>
+
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-city"></i>
+                <span>NagarVaani</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#contact">Contact</a>
+                <a href="pages/citizen/login.html" class="btn-outline">Citizen Login</a>
+                <a href="pages/officer/login.html" class="btn-outline">Officer Login</a>
+                <a href="pages/admin/login.html" class="btn-primary">Admin</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <div class="lang-selector">
+            <button class="lang-btn">🇮🇳 हिन्दी</button>
+            <button class="lang-btn">🇬🇧 English</button>
+            <button class="lang-btn">🇮🇳 मराठी</button>
+            <button class="lang-btn">🇮🇳 தமிழ்</button>
+            <button class="lang-btn">🇮🇳 తెలుగు</button>
+            <button class="lang-btn">🇮🇳 বাংলা</button>
+        </div>
+        
+        <main>
+            <section class="hero">
+                <h1>नगरवाणी - अपनी आवाज, अपनी सरकार</h1>
+                <h1>NagarVaani - Your Voice, Your Government</h1>
+                <p>Report civic issues in your language, track real-time resolution. Breaking language barriers in governance with AI-powered translation.</p>
+                
+                <div class="hero-buttons">
+                    <a href="pages/citizen/submit-complaint.html" class="btn-outline">
+                        <i class="fas fa-edit"></i> Submit Complaint
+                    </a>
+                    <a href="pages/citizen/track-complaint.html" class="btn-outline">
+                        <i class="fas fa-search"></i> Track Complaint
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Complaints Resolved</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Indian Languages</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Citizen Satisfaction</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features">
+                <h2 class="text-center mb-4" style="color: #0f172a;">Key Features</h2>
+                <p class="text-center text-muted mb-5">Making governance accessible to every citizen</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-language"></i>
+                        <h3>4+ Languages</h3>
+                        <p>Hindi, Marathi, Tamil, Telugu, Bengali, and more Indian languages</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI Translation</h3>
+                        <p>Auto-categorize and assign to right department</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Location Tracking</h3>
+                        <p>Auto-detect your ward and area</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bell"></i>
+                        <h3>SMS Alerts</h3>
+                        <p>Real-time status notifications</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="how-it-works" id="how-it-works">
+                <h2 style="color: #0f172a;">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Submit Complaint</h4>
+                        <p>In your language with voice or text</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>AI Processing</h4>
+                        <p>Auto-translate & assign to department</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Track Progress</h4>
+                        <p>Real-time updates via SMS/Email</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Get Resolution</h4>
+                        <p>Rate the quality of service</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-center">
+                <h2 style="color: #0f172a;">Services We Cover</h2>
+                <p class="text-muted mb-4">Report issues across various civic departments</p>
+                
+                <div class="service-grid">
+                    <div class="service-item">
+                        <i class="fas fa-road"></i>
+                        <h4>Roads</h4>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-tint"></i>
+                        <h4>Water</h4>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Electricity</h4>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-trash"></i>
+                        <h4>Sanitation</h4>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-volume-up"></i>
+                        <h4>Noise</h4>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-tree"></i>
+                        <h4>Environment</h4>
+                    </div>
+                </div>
+            </section>
+
+            <section class="testimonials" id="testimonials">
+                <h2 class="text-center mb-4" style="color: #0f172a;">What Citizens Say</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Finally able to report issues in my native language Marathi. Very helpful!"</p>
+                        <div class="testimonial-author">
+                            <strong>Rajesh Patil</strong>
+                            <span class="text-muted">Pune, Maharashtra</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Tracked my complaint in real-time. Officer visited within 24 hours!"</p>
+                        <div class="testimonial-author">
+                            <strong>Mohammad Khan</strong>
+                            <span class="text-muted">Lucknow, UP</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"The QR code tracking makes it easy to share complaint status."</p>
+                        <div class="testimonial-author">
+                            <strong>Priya Sharma</strong>
+                            <span class="text-muted">Delhi</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="contact">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NagarVaani</h4>
+                    <p>Making governance accessible to all</p>
+                    <p>A Government of India Initiative</p>
+                    <p><i class="fas fa-certificate"></i> ISO 27001 Certified</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> 1800-123-4567 (Toll Free)</p>
+                    <p><i class="fas fa-envelope"></i> support@nagarvaani.gov.in</p>
+                    <p><i class="fas fa-map-marker-alt"></i> New Delhi, India - 110001</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div style="display: flex; gap: 12px;">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NagarVaani. All rights reserved. A Government of India Project</p>
+                <div class="dev-credit">
+                    <i class="fas fa-heart"></i> Developed with pride by <strong>Team CodingBee</strong> for Digital India
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+
+        // Language selector
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.style.background = 'white');
+                this.style.background = '#dbeafe';
+                this.style.borderColor = '#2563eb';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

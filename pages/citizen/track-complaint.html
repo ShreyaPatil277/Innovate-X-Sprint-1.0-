@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint - JanSeva CRM</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/citizen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="offline-indicator">
+        <i class="fas fa-wifi-slash"></i> You are offline
+    </div>
+
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-comment-dots"></i>
+                <span>JanSeva CRM</span>
+            </div>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="submit-complaint.html">New Complaint</a>
+                <a href="my-dashboard.html">My Complaints</a>
+                <a href="public-feed.html">Public Feed</a>
+                <a href="login.html" class="btn-outline">Login</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <main>
+            <div class="track-container">
+                <div class="track-header">
+                    <h2><i class="fas fa-search"></i> Track Your Complaint</h2>
+                    <p>Enter your complaint ID to check real-time status</p>
+                </div>
+
+                <div class="track-search">
+                    <input type="text" id="trackId" placeholder="e.g., JAN24873" value="">
+                    <button class="btn-primary" id="trackBtn">
+                        <i class="fas fa-search"></i> Track
+                    </button>
+                </div>
+
+                <div id="complaintDetails">
+                    <!-- Complaint details will be loaded here -->
+                    <div class="card" style="text-align: center; padding: 40px;">
+                        <i class="fas fa-search" style="font-size: 3rem; color: var(--gray); margin-bottom: 15px;"></i>
+                        <h3>Enter Complaint ID to track</h3>
+                        <p class="text-muted">Example: JAN24873</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer style="margin-top: 50px;">
+            <div class="footer-bottom">
+                <p>&copy; 2024 JanSeva CRM. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/citizen/tracking.js"></script>
+</body>
+</html>

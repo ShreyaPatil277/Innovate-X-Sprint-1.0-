@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Login - JanSeva CRM</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/officer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-user-tie"></i>
+                    <span>JanSeva CRM</span>
+                </div>
+                <h2>Officer Login</h2>
+                <p>Government employee portal</p>
+            </div>
+
+            <form class="login-form" data-role="officer">
+                <div class="form-group">
+                    <label for="employeeId">Employee ID</label>
+                    <input type="text" id="employeeId" placeholder="Enter employee ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" class="form-control">
+                        <option value="">Select Department</option>
+                        <option value="pwd">Public Works Department (PWD)</option>
+                        <option value="water">Water Supply Department</option>
+                        <option value="electricity">Electricity Board</option>
+                        <option value="municipal">Municipal Corporation</option>
+                        <option value="police">Police Department</option>
+                    </select>
+                </div>
+
+                <div class="login-options">
+                    <label class="remember-me">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>Official use only. Authorized personnel only.</p>
+                <div class="badge badge-info" style="margin-top: 10px;">
+                    <i class="fas fa-shield-alt"></i> Secured by Government SSL
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="../../index.html" style="color: var(--gray);">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+</body>
+</html>

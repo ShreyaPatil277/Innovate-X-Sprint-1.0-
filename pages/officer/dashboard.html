@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Dashboard - JanSeva CRM</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/officer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="offline-indicator">
+        <i class="fas fa-wifi-slash"></i> You are offline
+    </div>
+
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-comment-dots"></i>
+                <span>JanSeva CRM - Officer Portal</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="assignment.html">Assignment</a>
+                <span class="badge badge-info">PWD Department</span>
+                <button class="btn-outline" onclick="auth.logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <main class="officer-dashboard">
+            <!-- Welcome Section -->
+            <div class="dashboard-welcome">
+                <h1>Welcome, Officer Patil 👋</h1>
+                <p>Here's what's happening with your assigned complaints</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalAssigned">0</h3>
+                        <p>Total Assigned</p>
+                        <span class="trend-value trend-up" data-trend="total">+12%</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingComplaints">0</h3>
+                        <p>Pending</p>
+                        <span class="trend-value trend-down" data-trend="pending">-5%</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="inProgressComplaints">0</h3>
+                        <p>In Progress</p>
+                        <span class="trend-value trend-up" data-trend="inProgress">+8%</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="resolvedComplaints">0</h3>
+                        <p>Resolved</p>
+                        <span class="trend-value trend-up" data-trend="resolved">+15%</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="overdueCount">0</h3>
+                        <p>Overdue</p>
+                        <span class="trend-value trend-up">+3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLA Alerts -->
+            <div class="alert alert-warning" id="slaAlerts">
+                <i class="fas fa-clock"></i>
+                <strong>SLA Alerts:</strong>
+                <span id="slaAlertsList"></span>
+            </div>
+
+            <!-- Complaint Management -->
+            <div class="complaint-management">
+                <div class="section-header">
+                    <h2><i class="fas fa-tasks"></i> Assigned Complaints</h2>
+                    <div class="complaint-actions">
+                        <button class="btn-outline" onclick="exportComplaints()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filter-section">
+                    <div class="filter-grid">
+                        <div class="filter-item">
+                            <label>Status</label>
+                            <select class="filter-select" id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>Priority</label>
+                            <select class="filter-select" id="priorityFilter">
+                                <option value="all">All Priority</option>
+                                <option value="critical">Critical</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>Search</label>
+                            <input type="text" class="filter-input" id="searchComplaint" 
+                                placeholder="Search by ID or citizen">
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn-primary" id="applyFilters">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                        <button class="btn-outline" onclick="resetFilters()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Complaints Table -->
+                <div class="complaint-table-container">
+                    <table class="complaint-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Citizen</th>
+                                <th>Category</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>SLA</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaintsTableBody">
+                            <!-- Loaded via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Complaint Detail Modal -->
+        <div class="modal" id="complaintModal">
+            <div class="modal-content complaint-detail-modal">
+                <div class="modal-header">
+                    <h3>Complaint Details</h3>
+                    <button class="modal-close" onclick="closeComplaintModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="complaintModalBody">
+                    <!-- Loaded via JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-outline" onclick="closeComplaintModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Update Modal -->
+        <div class="modal" id="statusModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Update Status</h3>
+                    <button class="modal-close" onclick="closeStatusModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="statusModalBody">
+                    <!-- Loaded via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 50px;">
+            <div class="footer-bottom">
+                <p>&copy; 2024 JanSeva CRM. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/officer/dashboard.js"></script>
+</body>
+</html>
